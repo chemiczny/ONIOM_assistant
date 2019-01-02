@@ -83,14 +83,17 @@ def writeNewInput ( oldInput, newCoords, newInputName ):
     destiny.close()
     oldFile.close()
 
-if len(sys.argv) != 4:
-    print("Potrzebuje: g16Log, oldInput, newInputName")
+if len(sys.argv) < 4:
+    print("Potrzebuje: g16Log, oldInput, newInputName, GPU(optional)")
 else:
     
     g16Log = sys.argv[1]
     oldInput = sys.argv[2]
     newInputName = sys.argv[3]
-    
+    GPU = False
+    if len(sys.argv) > 4:
+        GPU = True
+        
     newDir = newInputName.split(".")[0]
     
     if isdir(newDir):
@@ -100,4 +103,4 @@ else:
         last = getLastCoordsFromLog(g16Log)
         newInputName = join(newDir, newInputName)
         writeNewInput(oldInput, last, newInputName)
-        writeSlurmScript(join(newDir, "run.slurm"), basename(newInputName))
+        writeSlurmScript(join(newDir, "run.slurm"), basename(newInputName), GPU)

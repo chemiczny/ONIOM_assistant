@@ -84,7 +84,7 @@ def writeNewInput ( oldInput, newCoords, newInputName, modredundantLines ):
     destiny.close()
     oldFile.close()
     
-def writeScans( oldInput, coords, atomStart, atom2Move, atomDir, nSteps, minDist ):
+def writeScans( oldInput, coords, atomStart, atom2Move, atomDir, nSteps, minDist, GPU = False ):
     atomStartIndex = atomStart
     atomStart = np.array(coords[atom2Move])
     atomStop = np.array(coords[atomDir])
@@ -105,10 +105,10 @@ def writeScans( oldInput, coords, atomStart, atom2Move, atomDir, nSteps, minDist
         coords[atom2Move] = atomStart.tolist() 
         inputName = join(newDir, "step"+str(i)+".com")
         writeNewInput(oldInput, coords, inputName, "B "+str(atomStartIndex+1)+" " + str(atom2Move+1)+" F\n")
-        writeSlurmScript(join(newDir, "run.slurm"), inputName)
+        writeSlurmScript(join(newDir, "run.slurm"), inputName, GPU)
         
-if len(sys.argv) != 7:
-    print("Potrzebuje: oldInput, atomStart, atom2push, atomStop, nSteps, minDist")
+if len(sys.argv) < 7:
+    print("Potrzebuje: oldInput, atomStart, atom2push, atomStop, nSteps, minDist, GPU(optional)")
 else:
     
     oldInput = sys.argv[1]
@@ -117,6 +117,9 @@ else:
     atomDir = int(sys.argv[4])
     nSteps = int(sys.argv[5])
     minDist = float(sys.argv[6])
+    GPU = False
+    if len(sys.argv) > 7:
+        GPU = True
     
     coords = getCoordsFromInp(oldInput)
-    writeScans( oldInput, coords, atomStart, atom2move, atomDir , nSteps, minDist)
+    writeScans( oldInput, coords, atomStart, atom2move, atomDir , nSteps, minDist, GPU)
