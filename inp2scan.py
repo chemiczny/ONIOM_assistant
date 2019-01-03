@@ -73,13 +73,19 @@ def writeNewInput ( oldInput, newCoords, newInputName, modredundantLines ):
         destiny.write("\t".join(lineSpl)+"\n")
         
     line = oldFile.readline()
+    nonBondParameters = False
     while line:
         if "NonBon" in line and modredundantLines:
             destiny.write(modredundantLines)
-            destiny.write("\n")
+            destiny.write("\n\n")
+            nonBondParameters = True
         
         destiny.write(line)
         line = oldFile.readline()
+        
+    if not nonBondParameters:
+        destiny.write(modredundantLines)
+        destiny.write("\n")
     
     destiny.close()
     oldFile.close()
