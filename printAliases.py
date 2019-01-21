@@ -10,7 +10,9 @@ from os import getcwd
 from os.path import join
 
 cwd = getcwd()
-file2alias = { "g16Log2xyz.py" : "g16Log2xyz", "inp2scan.py" : "inp2scan", "lastGeom2newInput.py" : "lastGeom2newInput" }
+file2alias = { "g16Log2xyz.py" : "g16Log2xyz", "inp2scan.py" : "inp2scan",
+              "lastGeom2newInput.py" : "lastGeom2newInput", "fixCoordinates.py" : "fixCoordinates" ,
+              "g16Inps2NEB.py" : "g16Inps2NEB", "inp2series.py" : "inp2series"}
 
 for script in file2alias:
     path = join(cwd, script)
