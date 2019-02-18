@@ -56,7 +56,6 @@ def appendCoords2File( elements, coords, file2append ):
     xyz.close()
 
 if len(sys.argv) < 3:
-    print(sys.argv)
     print("Potrzebuje: inputy, xyz ")
 else:
     
