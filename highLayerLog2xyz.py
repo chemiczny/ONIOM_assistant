@@ -8,6 +8,21 @@ Created on Wed Nov 28 16:09:15 2018
 import sys
 from readingUtilities import isBlankLine, floatInList
 
+def getCoordInd( lineSpl ):
+    floatInd = floatInList(lineSpl)
+
+    contInd = [ floatInd[0] ]
+    lastElement = floatInd[0]
+
+    for ind in floatInd[1:]:
+        if ind-lastElement == 1:
+            contInd.append(ind)
+        else:
+            break
+        lastElement = ind
+
+    return contInd[-3:]
+
 def readHighLayerIndexesFromInput( oldInput ):
     oldFile = open(oldInput, 'r')
     line = oldFile.readline()
@@ -29,7 +44,7 @@ def readHighLayerIndexesFromInput( oldInput ):
     while not isBlankLine(line):
         
         lineSpl = line.split()
-        coordInd = floatInList(lineSpl)[-3:]
+        coordInd = getCoordInd( lineSpl )
         
         layerInd = lineSpl[coordInd[-1]+1]
         
@@ -49,7 +64,14 @@ def g16Log2xyz( g16log, xyz, indexes ):
     
     
     line = ircFile.readline()
-    elements = { 6 : "C", 7 : "N", 8 : "O", 1 : "H", 16 : "S", 15 : "S" }
+    elements = [
+    "H", "He",
+    "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+    "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
+    "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
+    "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe",
+    "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn",
+    "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg"] 
     firstCoords = True
     while line:
        
@@ -71,7 +93,7 @@ def g16Log2xyz( g16log, xyz, indexes ):
                     lineS = line.split()
                     z = int(lineS[1])
                     newCoords = "\t".join(lineS[-3:])
-                    coords +=" "+ elements[z] + " "+newCoords+"\n"
+                    coords +=" "+ elements[z+1] + " "+newCoords+"\n"
                     atomNo +=1
                 line = ircFile.readline()
                 actualIndex += 1
