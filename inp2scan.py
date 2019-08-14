@@ -110,7 +110,7 @@ def writeScans( oldInput, coords, atomStart, atom2Move, atomDir, nSteps, minDist
         atomStart += step
         coords[atom2Move] = atomStart.tolist() 
         inputName = join(newDir, "step"+str(i)+".com")
-        writeNewInput(oldInput, coords, inputName, "B "+str(atomStartIndex+1)+" " + str(atom2Move+1)+" F\n")
+        writeNewInput(oldInput, coords, inputName, "" )
         writeSlurmScript(join(newDir, "run.slurm"), basename(inputName), GPU)
         
 if len(sys.argv) < 7:

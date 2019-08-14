@@ -44,6 +44,21 @@ def getLastCoordsFromLog(logFile):
     gFile.close()
     return coords
 
+def getCoordInd( lineSpl ):
+    floatInd = floatInList(lineSpl)
+
+    contInd = [ floatInd[0] ]
+    lastElement = floatInd[0]
+
+    for ind in floatInd[1:]:
+        if ind-lastElement == 1:
+            contInd.append(ind)
+        else:
+            break
+        lastElement = ind
+
+    return contInd[-3:]
+
 def writeNewInput ( oldInput, newCoords, newInputName ):
     oldFile = open(oldInput, 'r')
     beginning = ""
@@ -70,7 +85,8 @@ def writeNewInput ( oldInput, newCoords, newInputName ):
     for coord in newCoords:
         line = oldFile.readline()
         lineSpl = line.split()
-        coordInd = floatInList(lineSpl)[-3:]
+        coordInd = getCoordInd( lineSpl )
+        print(coordInd)
         for ci, crd in zip(coordInd, coord):
             lineSpl[ci] = str(crd)
         destiny.write("\t".join(lineSpl)+"\n")

@@ -13,7 +13,14 @@ def g16Log2xyz( g16log, xyz ):
     
     
     line = ircFile.readline()
-    elements = { 6 : "C", 7 : "N", 8 : "O", 1 : "H", 16 : "S", 15 : "S" }
+    elements = [
+    "H", "He",
+    "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+    "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
+    "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
+    "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe",
+    "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn",
+    "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg"] 
     firstCoords = True
     while line:
        
@@ -32,7 +39,7 @@ def g16Log2xyz( g16log, xyz ):
                 lineS = line.split()
                 z = int(lineS[1])
                 newCoords = "\t".join(lineS[-3:])
-                coords +=" "+ elements[z] + " "+newCoords+"\n"
+                coords +=" "+ elements[z-1] + " "+newCoords+"\n"
                 atomNo +=1
                 line = ircFile.readline()
                 
