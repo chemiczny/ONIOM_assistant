@@ -86,7 +86,6 @@ def writeNewInput ( oldInput, newCoords, newInputName ):
         line = oldFile.readline()
         lineSpl = line.split()
         coordInd = getCoordInd( lineSpl )
-        print(coordInd)
         for ci, crd in zip(coordInd, coord):
             lineSpl[ci] = str(crd)
         destiny.write("\t".join(lineSpl)+"\n")
