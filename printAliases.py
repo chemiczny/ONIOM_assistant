@@ -17,6 +17,9 @@ file2alias = { "g16Log2xyz.py" : "g16Log2xyz", "inp2scan.py" : "inp2scan",
               "highLayer2xyz.py" : "highLayer2xyz",
               "highLayerLog2xyz.py": "highLayerLog2xyz"}
 
+print("")
 for script in file2alias:
     path = join(cwd, script)
     print("alias "+file2alias[script]+"='python "+path+"'")
+
+print("")
