@@ -11,10 +11,10 @@ from os import mkdir
 from readingUtilities import isBlankLine, floatInList
 from slurm import writeSlurmScript
 
-def getLastCoordsFromLog(logFile):
+def getCoordsFromLog(logFile, index):
     gFile = open(logFile, 'r' )
     
-    
+    allCoords = []
     line = gFile.readline()
     while line:
        
@@ -32,12 +32,14 @@ def getLastCoordsFromLog(logFile):
                 atomNo +=1
                 line = gFile.readline()
                 
+            allCoords.append(coords)
+                
         
         line = gFile.readline()
         
         
     gFile.close()
-    return coords
+    return allCoords[index]
 
 def getCoordInd( lineSpl ):
     floatInd = floatInList(lineSpl)
@@ -94,15 +96,15 @@ def writeNewInput ( oldInput, newCoords, newInputName ):
     oldFile.close()
 
 if len(sys.argv) < 4:
-    print("Potrzebuje: g16Log, oldInput, newInputName, GPU(optional)")
+    print("Potrzebuje: g16Log, oldInput, newInputName, geometry index [optional, negative indexes possible]")
 else:
     
     g16Log = sys.argv[1]
     oldInput = sys.argv[2]
     newInputName = sys.argv[3]
-    GPU = False
+    index = -1
     if len(sys.argv) > 4:
-        GPU = True
+        index = int(sys.argv[4])
         
     newDir = newInputName.split(".")[0]
     
@@ -110,7 +112,7 @@ else:
         print("Wybrana sciezka juz istnieje!")
     else:
         mkdir(newDir)
-        last = getLastCoordsFromLog(g16Log)
+        last = getCoordsFromLog(g16Log, index)
         newInputName = join(newDir, newInputName)
         writeNewInput(oldInput, last, newInputName)
-        writeSlurmScript(join(newDir, "run.slurm"), basename(newInputName), GPU)
+        writeSlurmScript(join(newDir, "run.slurm"), basename(newInputName), False)
