@@ -16,14 +16,9 @@ def getLastCoordsFromLog(logFile):
     
     
     line = gFile.readline()
-    firstCoords = True
     while line:
        
         if "Coordinates" in line:
-            if firstCoords:
-                firstCoords = False
-                line = gFile.readline()
-                continue
             
             for i in range(3):
                 line = gFile.readline()

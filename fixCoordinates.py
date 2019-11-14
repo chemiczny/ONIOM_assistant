@@ -70,6 +70,8 @@ def getFrozenIndexes( oldInput ):
     while not isBlankLine(line):
         
         lineSpl = line.split()
+#        if not line:
+#            break
         if lineSpl[1] == "-1":
             indexes.append(ind)
             
@@ -107,6 +109,8 @@ else:
     for i in indexes:
         frozen1Mat.append(coords[i]+[1])
         
+    
+    
     frozen1Mat = np.transpose(np.array(frozen1Mat[:4]))
     
     frozen2Mat = []
@@ -114,9 +118,10 @@ else:
         frozen2Mat.append(coords2[i]+[1])
         
     frozen2Mat = np.transpose(np.array(frozen2Mat[:4]))
-    
     T = np.matmul(  frozen2Mat, np.linalg.inv(frozen1Mat))
+    
     newCoords1Temp = np.matrix.transpose(np.matmul(T, np.matrix.transpose(coordMat1)))
+    
     newCoords1 = []
     for row in newCoords1Temp:
         newCoords1.append( [row[0], row[1], row[2]] )

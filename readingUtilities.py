@@ -16,6 +16,13 @@ def isfloat(value):
   except ValueError:
     return False
 
+def isInt(value):
+  try:
+    int(value)
+    return True
+  except ValueError:
+    return False
+
 def floatInList( list2test ):
     res = []
     for i, item in enumerate(list2test):
