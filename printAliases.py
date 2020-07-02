@@ -15,7 +15,8 @@ file2alias = { "g16Log2xyz.py" : "g16Log2xyz", "inp2scan.py" : "inp2scan",
               "g16Inps2NEB.py" : "g16Inps2NEB", "inp2series.py" : "inp2series",
               "linearScan.py" : "linearScan",
               "highLayer2xyz.py" : "highLayer2xyz",
-              "highLayerLog2xyz.py": "highLayerLog2xyz"}
+              "highLayerLog2xyz.py": "highLayerLog2xyz",
+              "amberQMMM2xyz.py" : "amberQMMM2xyz"}
 
 print("")
 for script in file2alias:
