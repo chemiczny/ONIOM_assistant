@@ -7,7 +7,7 @@ Created on Wed Jun 20 11:49:11 2018
 """
 import sys
 
-def g16Log2xyz( g16log, xyz ):
+def g16Log2xyz( g16log, xyz, onlyOptimized ):
     ircFile = open(g16log, 'r' )
     xyz = open(xyz, 'w')
     
@@ -53,6 +53,13 @@ def g16Log2xyz( g16log, xyz ):
                 continue
                 
             energy = float(line.split()[4])
+            
+            if not onlyOptimized:
+                xyz.write(" "+str(atomNo)+ "\n")
+                xyz.write("scf done: "+str(energy)+"\n")
+                xyz.write(coords)
+            
+        if onlyOptimized and "Stationary point found" in line:
             xyz.write(" "+str(atomNo)+ "\n")
             xyz.write("scf done: "+str(energy)+"\n")
             xyz.write(coords)
@@ -65,8 +72,11 @@ def g16Log2xyz( g16log, xyz ):
     xyz.close()
 
 if len(sys.argv) == 1:
-    print( "Give me gaussian log")
+    print( "g16Log2xyz gaussian log, only optimized [optional]")
 else:
     g16Log = sys.argv[1] 
+    onlyOptimized = False
+    if len(sys.argv) > 2:
+        onlyOptimized = True
     xyz = g16Log[:-3]+"xyz"
-    g16Log2xyz(g16Log, xyz)
+    g16Log2xyz(g16Log, xyz, onlyOptimized)
